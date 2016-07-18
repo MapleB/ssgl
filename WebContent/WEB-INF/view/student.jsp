@@ -312,12 +312,12 @@ String msg = (String)request.getAttribute("msg");
                 </li>
                 <li><i class="fa fa-lg fa-angle-right"></i>
                 </li>
-                <li><a href="#" title="Sample page 1">宿舍管理</a>
+                <li><a href="#" title="Sample page 1">学生管理</a>
                 </li>
                 <li><i class="fa fa-lg fa-angle-right"></i>
                
               	</li>
-    	            <li><a href="<%=path %>/admin.do?method=goAdminTable" title="Sample page 1">查看宿舍</a>
+    	            <li><a href="<%=path %>/admin.do?method=goAdminTable" title="Sample page 1">查看学生</a>
                 </li>
                 
                 <li class="pull-right">

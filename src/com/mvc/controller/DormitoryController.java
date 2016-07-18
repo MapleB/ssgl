@@ -19,6 +19,7 @@ import com.mvc.entity.Admin;
 import com.mvc.entity.Dormitory;
 import com.mvc.entity.Std;
 import com.mvc.service.DormitoryService;
+import com.mvc.service.StdService;
 import com.mvc.service.StudentService;
 
 @Controller
@@ -32,6 +33,9 @@ public class DormitoryController {
 	
 	@Autowired
 	private StudentService studentService;
+	
+	@Autowired
+	private StdService stdService;
 	
 	@RequestMapping
 	public String load(ModelMap modelMap){
@@ -52,8 +56,8 @@ public class DormitoryController {
 	
 	@RequestMapping(params = "method=goCheckDormitory")
 	public String goCheckDormitory(HttpServletRequest request, ModelMap modelMap,HttpSession session){
-		String id = request.getParameter("id");
-		session.setAttribute("domitortId", id);
+		Integer id = Integer.valueOf(request.getParameter("id"));
+		session.setAttribute("dormitoryId", id);
 		List studentList = studentService.getSudentsByDormitoryId(Integer.valueOf(id));
 		modelMap.put("studentList", studentList);
 		modelMap.put("msg", "");
@@ -62,16 +66,55 @@ public class DormitoryController {
 	
 	@RequestMapping(params = "method=addStd")
 	public String addStd(HttpServletRequest request, ModelMap modelMap,HttpSession session){
-		String domitoryId = (String) session.getAttribute("domitoryId");
+		Integer domitoryId = (Integer) session.getAttribute("dormitoryId");
+		Dormitory dormitory = dormitoryService.getDormitoryById(domitoryId);
 		String studentId = request.getParameter("studentId");
 		String authority = request.getParameter("authority");
 		Std std = new Std();
+		Integer id = null;
+		try {
+			id = Integer.valueOf(studentId);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			List studentList = studentService.getSudentsByDormitoryId(domitoryId);
+			modelMap.put("studentList", studentList);
+			modelMap.put("msg", "学生编号不正确");
+			return "checkDormitory";
+		}
+		if (studentService.getStudentById(id) == null) {
+			List studentList = studentService.getSudentsByDormitoryId(domitoryId);
+			modelMap.put("studentList", studentList);
+			modelMap.put("msg", "学生不存在");
+			return "checkDormitory";
+		}
+		if (stdService.getStdByDormitoryIdAndStudentId(domitoryId, id) != null) {
+			List studentList = studentService.getSudentsByDormitoryId(domitoryId);
+			modelMap.put("studentList", studentList);
+			modelMap.put("msg", "学生已经在该宿舍中了");
+			return "checkDormitory";
+		}
+		if (stdService.getTopStdByDormitoryId(domitoryId)!=null &&  authority.equals("舍长")) {
+			List studentList = studentService.getSudentsByDormitoryId(domitoryId);
+			modelMap.put("studentList", studentList);
+			modelMap.put("msg", "该宿舍只能有一个舍长");
+			return "checkDormitory";
+		}
+		if (dormitory.getSize() >= studentService.getSudentsByDormitoryId(domitoryId).size()) {
+			List studentList = studentService.getSudentsByDormitoryId(domitoryId);
+			modelMap.put("studentList", studentList);
+			modelMap.put("msg", "该宿舍已经满员");
+			return "checkDormitory";
+		}
 		
+		List studentList = studentService.getSudentsByDormitoryId(domitoryId);
+		modelMap.put("studentList", studentList);
 		std.setAuthority(authority);
 		std.setDomitoryId(Integer.valueOf(domitoryId));
 		std.setStudentId(Integer.valueOf(studentId));
+		stdService.save(std);
 		modelMap.put("msg", "添加成功");
-		return "checkDomitory";
+		return "checkDormitory";
 	}
 	
 	@RequestMapping(params = "method=save")
@@ -83,6 +126,7 @@ public class DormitoryController {
 		String name = request.getParameter("name");
 		String address = request.getParameter("address");
 		String phone = request.getParameter("phone");
+		String size = request.getParameter("size");
 		Dormitory dormitory = new Dormitory();
 		try {
 			dormitory.setId(Integer.valueOf(id));
@@ -90,6 +134,7 @@ public class DormitoryController {
 			modelMap.put("msg", "编号必须为数字");
 			return "dormitoryAdd";
 		}
+		dormitory.setId(Integer.valueOf(size));
 		dormitory.setName(name);
 		dormitory.setPhone(phone);
 		dormitory.setAddress(address);

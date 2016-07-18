@@ -497,9 +497,9 @@ String msg = (String)request.getAttribute("msg");
                                     <form action="<%=path %>/dormitory.do?method=addStd" id="contact-form" class="form-horizontal" method="post">
                                         <fieldset>
                                             <div class="control-group">
-                                                <label class="control-label" for="id">学生编号</label>
+                                                <label class="control-label" for="studentId">学生编号</label>
                                                 <div class="controls">
-                                                    <input type="text" class="form-control" name="id" id="id">
+                                                    <input type="text" class="form-control" name="studentId" id="studentId">
                                                 </div>
                                             </div>
                                 				<div class="control-group">

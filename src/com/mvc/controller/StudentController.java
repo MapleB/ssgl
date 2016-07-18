@@ -84,6 +84,8 @@ public class StudentController {
 			log.error(e.getMessage());
 			e.printStackTrace();
 		}
+		List<Object> list = studentService.getStudentList();
+		modelMap.put("studentList", list);
 		modelMap.put("msg", "删除成功");
 		return "student";
 	}

@@ -17,20 +17,33 @@ public class StdService {
 	@Autowired
 	private EntityDao entityDao;
 	
-	
 	@Transactional
-	public List<Object> getSudentsByDormitoryId(Integer dormitoryId){
+	public Std getStdByDormitoryIdAndStudentId(Integer dormitoryId, Integer studentId){
 		StringBuffer sff = new StringBuffer();
-		sff.append("select c from ").append(Dormitory.class.getSimpleName()).append(" a ,")
-		.append(Std.class.getSimpleName()).append(" b ,")
-		.append(Student.class).append(" c ")
-		.append("where a.id=").append(dormitoryId).append(" and a.id=b.dormitortId and b.studentId=c.id");
+		sff.append("select a from ").append(Std.class.getSimpleName()).append(" a ")
+		.append("where a.dormitoryId=").append(dormitoryId).append(" and a.studentId=").append(studentId);
 		List<Object> list = entityDao.createQuery(sff.toString());
-		return list;
+		if (list.size()>0) {
+			return (Std) list.get(0);
+		}
+		return null;
 	}
 	
-	public void save(Dormitory dm){
-		entityDao.save(dm);
+	@Transactional
+	public Std getTopStdByDormitoryId(Integer dormitoryId){
+		StringBuffer sff = new StringBuffer();
+		sff.append("select a from ").append(Std.class.getSimpleName()).append(" a ")
+		.append("where a.dormitoryId=").append(dormitoryId).append(" and a.authority='舍长'");
+		List<Object> list = entityDao.createQuery(sff.toString());
+		if (list.size()>0) {
+			return (Std) list.get(0);
+		}
+		return null;
+	}
+
+	
+	public void save(Std std){
+		entityDao.save(std);
 	}
 	public void delete(Object obj){
 		entityDao.delete(obj);

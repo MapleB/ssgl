@@ -210,21 +210,16 @@ String msg = (String)request.getAttribute("msg");
                          <li>
                             <a class="tooltip-tip ajax-load" href="#" title="Blog App">
                                 <i class="entypo-users"></i>
-                                <span>人员管理</span>
+                                <span>学生管理</span>
 
                             </a>
                              <ul>
-                                <li>
-                                    <a class="tooltip-tip2 ajax-load" href="<%=path %>/admin.do?method=goAdminTable" title="查看管理员"><i class="entypo-cc-by"></i><span>查看管理员</span></a>
-                                </li>
+                                
                               <li>
-                                    <a class="tooltip-tip2 ajax-load" href="<%=path %>/admin.do?method=goAdminUserTable&action=goUser" title="查看用户"><i class="entypo-user"></i><span>查看用户</span></a>
+                                    <a class="tooltip-tip2 ajax-load" href="<%=path %>/student.do" title="查看学生"><i class="entypo-user"></i><span>查看学生</span></a>
                                 </li>
                                 <li>
-                                    <a class="tooltip-tip2 ajax-load" href="#" title="查看客户"><i class="entypo-user-add"></i><span>查看客户</span></a>
-                                </li>
-                                <li>
-                                    <a class="tooltip-tip2 ajax-load" href="<%=path %>/admin.do?method=goA" title="添加账户"><i class="entypo-user-add"></i><span>添加账户</span></a>
+                                    <a class="tooltip-tip2 ajax-load" href="<%=path %>/student.do?method=goStudentAdd" title="添加学生"><i class="entypo-user-add"></i><span>添加学生</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -239,7 +234,7 @@ String msg = (String)request.getAttribute("msg");
                                     <a class="tooltip-tip2 ajax-load" href="<%=path %>/dormitory.do" title="查看所有部门"><i class="entypo-cc-by"></i><span>查看所有宿舍</span></a>
                                 </li>
                              	 <li>
-                                    <a class="tooltip-tip2 ajax-load" href="<%=path %>/dormitory.do?method=goDormitoryAdd" title="添加部门"><i class="entypo-user"></i><span>添加宿舍</span></a>
+                                    <a class="tooltip-tip2 ajax-load" href="<%=path %>/dormitory.do?method=goDormitoryAdd"" title="添加部门"><i class="entypo-user"></i><span>添加宿舍</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -415,6 +410,16 @@ String msg = (String)request.getAttribute("msg");
                                                     <input type="text" class="form-control" name="address"" id="address">
                                                 </div>
                                             </div>
+                                            
+                                            <div class="control-group">
+                                            		<label class="control-label" for="size">数量</label>
+			                                    <div class="controls">
+			                                            <select id="size" name="size" class="form-control">
+			                                                <option value="6" selected="selected">6</option>
+			                                                <option value="8">8</option>
+			                                            </select>
+			                                    </div>
+                                				</div>
                                             
                                 			
                                 				<div class="control-group">

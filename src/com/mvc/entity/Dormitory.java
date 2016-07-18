@@ -28,6 +28,9 @@ public class Dormitory implements Serializable{
 	
 	@Column(name = "phone")
 	private String phone;
+	
+	@Column(name = "size")
+	private Integer size;
 
 	public Integer getId() {
 		return id;
@@ -59,6 +62,14 @@ public class Dormitory implements Serializable{
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public Integer getSize() {
+		return size;
+	}
+
+	public void setSize(Integer size) {
+		this.size = size;
 	}
 	
 }

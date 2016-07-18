@@ -15,6 +15,18 @@ public class DormitoryService {
 	@Autowired
 	private EntityDao entityDao;
 	
+	@Transactional
+	public Dormitory getDormitoryById(Integer id){
+		StringBuffer sff = new StringBuffer();
+		sff.append("select a from ").append(Dormitory.class.getSimpleName()).append(" a ")
+		.append("where a.id=").append(id);
+		List<Object> list = entityDao.createQuery(sff.toString());
+		if (list.size()>0) {
+			return (Dormitory) list.get(0);
+		} else {
+			return null;
+		}
+	}
 	
 	@Transactional
 	public List<Object> getDormitoryList(){

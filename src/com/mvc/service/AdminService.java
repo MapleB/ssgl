@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mvc.dao.EntityDao;
 import com.mvc.entity.Admin;
@@ -25,6 +26,7 @@ public class AdminService {
 		
 	}
 
+	@Transactional
 	public Admin getAdminByNameAndPwd(String name, String pwd) {
 		// TODO Auto-generated method stub
 		List<String> propertyNameList = new ArrayList<String>();

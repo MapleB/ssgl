@@ -25,6 +25,21 @@ public class StudentService {
 	}
 	
 	@Transactional
+	public Student getStudentById(Integer id){
+		StringBuffer sff = new StringBuffer();
+		sff.append("select a from ").append(Student.class.getSimpleName()).append(" a ")
+		.append("where a.id=").append(id);
+		List<Object> list = entityDao.createQuery(sff.toString());
+		if (list.size()>0) {
+			return (Student) list.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+
+	
+	@Transactional
 	public List<Object> getSudentsByDormitoryId(Integer dormitoryId){
 		StringBuffer sff = new StringBuffer();
 		sff.append("select new map(c.id as id, c.name as name, b.authority as authority) from ").append(Dormitory.class.getSimpleName()).append(" a ,")
@@ -34,6 +49,8 @@ public class StudentService {
 		List<Object> list = entityDao.createQuery(sff.toString());
 		return list;
 	}
+	
+	
 	
 	public void save(Student st){
 		entityDao.save(st);
